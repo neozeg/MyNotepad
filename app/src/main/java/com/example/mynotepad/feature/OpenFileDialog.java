@@ -117,7 +117,7 @@ public class OpenFileDialog {
 		
 		private int refreshFileList()
 		{
-			// 刷新文件列表
+			// 鍒锋柊鏂囦欢鍒楄〃
 			File[] files = null;
 			try{
 				files = new File(path).listFiles();
@@ -126,7 +126,7 @@ public class OpenFileDialog {
 				files = null;
 			}
 			if(files==null){
-				// 访问出错
+				// 璁块棶鍑洪敊
 				Toast.makeText(getContext(), sOnErrorMsg, Toast.LENGTH_SHORT).show();
 				return -1;
 			}
@@ -137,12 +137,12 @@ public class OpenFileDialog {
 				list = new ArrayList<Map<String, Object>>(files.length);
 			}
 			
-			// 用来先保存文件夹和文件夹的两个列�?
+			// 鐢ㄦ潵鍏堜繚瀛樻枃浠跺す鍜屾枃浠跺す鐨勪袱涓垪琛?
 			ArrayList<Map<String, Object>> lfolders = new ArrayList<Map<String, Object>>();
 			ArrayList<Map<String, Object>> lfiles = new ArrayList<Map<String, Object>>();
 			
 			if(!this.path.equals(sRoot)){
-				// 添加根目�? �? 上一层目�?
+				// 娣诲姞鏍圭洰褰? 鍜? 涓婁竴灞傜洰褰?
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put(EXTRA_STRING_NAME, sRoot);
 				map.put(EXTRA_STRING_PATH, sRoot);
@@ -159,7 +159,7 @@ public class OpenFileDialog {
 			for(File file: files)
 			{
 				if(file.isDirectory() && file.listFiles()!=null){
-					// 添加文件�?
+					// 娣诲姞鏂囦欢澶?
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put(EXTRA_STRING_NAME, file.getName());
 					map.put(EXTRA_STRING_PATH, file.getPath());
@@ -167,7 +167,7 @@ public class OpenFileDialog {
 					lfolders.add(map);
 				}
 				else if(file.isFile()){
-					// 添加文件
+					// 娣诲姞鏂囦欢
 					String sf = getSuffix(file.getName()).toLowerCase();
 					if(suffix == null || suffix.length()==0 || (sf.length()>0 && suffix.indexOf("."+sf+";")>=0)){
 						Map<String, Object> map = new HashMap<String, Object>();
@@ -179,8 +179,8 @@ public class OpenFileDialog {
 				}  
 			}
 			
-			list.addAll(lfolders); // 先添加文件夹，确保文件夹显示在上�?
-			list.addAll(lfiles);	//再添加文�?
+			list.addAll(lfolders); // 鍏堟坊鍔犳枃浠跺す锛岀‘淇濇枃浠跺す鏄剧ず鍦ㄤ笂闈?
+			list.addAll(lfiles);	//鍐嶆坊鍔犳枃浠?
 			
 			
 			SimpleAdapter adapter = new SimpleAdapter(getContext(), list, R.layout.filedialogitem, new String[]{EXTRA_STRING_IMG, EXTRA_STRING_NAME, EXTRA_STRING_PATH}, new int[]{R.id.filedialogitem_img, R.id.filedialogitem_name, R.id.filedialogitem_path});
@@ -189,39 +189,39 @@ public class OpenFileDialog {
 		}
 		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-			// 条目选择
+			// 鏉＄洰閫夋嫨
 			String pt = (String) list.get(position).get(EXTRA_STRING_PATH);
 			String fn = (String) list.get(position).get(EXTRA_STRING_NAME);
 			if(fn.equals(sRoot) || fn.equals(sParent)){
-				// 如果是更目录或�?�上�?�?
+				// 濡傛灉鏄洿鐩綍鎴栬?呬笂涓?灞?
 				File fl = new File(pt);
 				String ppt = fl.getParent();
 				if(ppt != null){
-					// 返回上一�?
+					// 杩斿洖涓婁竴灞?
 					path = ppt;
 				}
 				else{
-					// 返回更目�?
+					// 杩斿洖鏇寸洰褰?
 					path = sRoot;
 				}
 			}
 			else{
 				File fl = new File(pt);
 				if(fl.isFile()){
-					// 如果是文�?
-					((Activity)getContext()).dismissDialog(this.dialogid); // 让文件夹对话框消�?
+					// 濡傛灉鏄枃浠?
+					((Activity)getContext()).dismissDialog(this.dialogid); // 璁╂枃浠跺す瀵硅瘽妗嗘秷澶?
 					
-					// 设置回调的返回�??
+					// 璁剧疆鍥炶皟鐨勮繑鍥炲??
 					Bundle bundle = new Bundle();
 					bundle.putString(EXTRA_STRING_PATH, pt);
 					bundle.putString(EXTRA_STRING_NAME, fn);
-					// 调用事先设置的回调函�?
+					// 璋冪敤浜嬪厛璁剧疆鐨勫洖璋冨嚱鏁?
 					this.callback.callback(bundle);
 					return;
 				}
 				else if(fl.isDirectory()){
-					// 如果是文件夹
-					// 那么进入选中的文件夹
+					// 濡傛灉鏄枃浠跺す
+					// 閭ｄ箞杩涘叆閫変腑鐨勬枃浠跺す
 					path = pt;
 				}
 			}
