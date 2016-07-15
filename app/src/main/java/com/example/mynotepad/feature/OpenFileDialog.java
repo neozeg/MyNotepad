@@ -43,7 +43,7 @@ public class OpenFileDialog {
 		return dialog;
 	}
 	public static Dialog createDialog(int id, Context context, String title, CallbackBundle callback, String suffix, Map<String, Integer> images,String path){
-		AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.AppTheme);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setView(new FileSelectView(context, id, callback, suffix, images,path));
 		Dialog dialog = builder.create();
 		//dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

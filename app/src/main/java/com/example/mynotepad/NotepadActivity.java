@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -111,6 +112,8 @@ public class NotepadActivity extends Activity {
 
         return str;
     }
+
+
     @Override
     protected Dialog onCreateDialog(int id) {
         if(id == OPEN_FILE_DIALOG_ID){
